@@ -1,14 +1,14 @@
 const btnsubmit = document.querySelector("form button")
 const inputTxt = document.querySelector("form input");
+const ul = document.querySelector("ul");
 var btndelete = document.querySelectorAll(".btn-danger");
+const checkbox = document.createElement('input');
 
 
 
 function createTask(){
     if(inputTxt.value != null && inputTxt.value !==""){
-        const ul = document.querySelector("ul");
         const li = document.createElement('li');
-        const input = document.createElement('input');
         const num = ul.children.length + 1;
         const label = document.createElement('label');
         const labelbtn = document.createElement('label');
@@ -18,9 +18,9 @@ function createTask(){
     
         li.classList.add('todo', 'list-group-item','d-flex','align-items-center');
     
-        input.type ='checkbox'
-        input.classList.add('form-check-input');
-        input.id = "todo-" + num;
+        checkbox.type ='checkbox'
+        checkbox.classList.add('form-check-input');
+        checkbox.id = "todo-" + num;
     
         label.classList.add("ms-2", "form-check-label");
         label.innerText = inputTxt.value;
@@ -30,17 +30,19 @@ function createTask(){
         i.classList.add("bi-trash")
         labelbtn.append(i)
     
-        li.append(input, label, labelbtn)
+        li.append(checkbox, label, labelbtn)
         ul.prepend(li)
     }else{
         alert("Veuilliez ajouter une tache")
     }
 }
 function deleteTask(){
+
+    
     btndelete.forEach(btn => {
         btn.addEventListener('click',function (e){
 
-            console.log("ok");
+            console.log(e.target);
             btn.parentElement.remove()
         })
         
@@ -48,11 +50,48 @@ function deleteTask(){
 
 }
 
+
+// ul.addEventListener('click', function (e) {
+//     // Vérifier si l'élément cliqué est un bouton de suppression
+//     if (e.target.closest(".btn-danger")) {
+//         const btn = e.target.closest(".btn-danger");
+//         btn.parentElement.remove(); // Supprime la tâche (parent du bouton)
+//         console.log("Tâche supprimée !");
+//     }
+// });
+
+function filter (nameElementData){
+    var allLi= document.querySelectorAll("li");
+    
+    allLi.forEach(element => {
+        
+        if (!element.classList.contains(nameElementData.dataset.filter)) {
+            element.classList.add("d-none");
+            element.classList.remove("d-flex");
+        }else{
+            element.classList.add("d-flex");
+            element.classList.remove("d-none");
+            if (element.className !== "d-flex") {
+                element.classList.add("d-flex");
+            }
+        }
+
+    });   
+}
+
+
 btnsubmit.addEventListener('click', function (e) {
     e.preventDefault()
     createTask();
     inputTxt.value = "";
 })
+
+btnsubmit.addEventListener('click', function (e) {
+    e.preventDefault()
+    createTask();
+    inputTxt.value = "";
+})
+
 
 
 deleteTask()
