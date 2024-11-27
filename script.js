@@ -4,7 +4,7 @@ const ul = document.querySelector("ul");
 var btndelete = document.querySelectorAll(".btn-danger");
 var allLi= document.querySelectorAll("li");
 const box = document.querySelectorAll('input[type="checkbox"]')
-
+const grpBtn = document.querySelector('.btn-group');
 
 function createTask(){
     if(inputTxt.value != null && inputTxt.value !==""){
@@ -82,6 +82,20 @@ function deleteTask(){
     
     
 // }
+grpBtn.addEventListener('click', function (e) {
+    const target = e.target;
+    if (grpBtn.contains(e.target)) {
+        if(!target.classList.contains("active")){
+            const btnactive = document.querySelector('.active');
+            btnactive.classList.remove("active")
+            target.classList.add("active")
+        }
+        
+        
+    }
+    
+    
+})
 
 function coche() {
     const container = document.querySelector('ul'); // Remplacez par le conteneur réel
@@ -111,9 +125,14 @@ function coche() {
 //         console.log("Tâche supprimée !");
 //     }
 // });
+function activebtn(){
+    const activebtn = document.querySelector(".active");
+    activebtn.classList.remove("active");
+
+}
+
 
 function filter (nameElementData){
-    
     allLi.forEach(element => {
         
         if (!element.classList.contains(nameElementData.dataset.filter)) {
